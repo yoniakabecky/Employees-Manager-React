@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import { Edit, Delete } from '@material-ui/icons';
 import { IconButton, Tooltip } from '@material-ui/core';
 import { amber, red } from '@material-ui/core/colors';
 import EditDialogs from '../dialogs/EditDialog';
-import { DialogContext } from '../../contexts/DialogContext';
 
 const styles = {
   edit: {
@@ -15,7 +14,7 @@ const styles = {
 };
 
 const ActionIcons = () => {
-  const { editDialog, openEditDialog } = useContext(DialogContext);
+  const [openDialog, setOpenDialog] = useState(false);
 
   return (
     <>
@@ -23,7 +22,7 @@ const ActionIcons = () => {
         <IconButton
           aria-label="edit"
           style={styles.edit}
-          onClick={() => openEditDialog()}
+          onClick={() => setOpenDialog(!openDialog)}
         >
           <Edit fontSize="small" />
         </IconButton>
@@ -33,7 +32,7 @@ const ActionIcons = () => {
           <Delete fontSize="small" />
         </IconButton>
       </Tooltip>
-      {editDialog ? <EditDialogs open={editDialog} /> : ""}
+      {openDialog ? <EditDialogs open={openDialog} /> : ""}
     </>
   );
 }

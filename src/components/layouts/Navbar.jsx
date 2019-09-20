@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Button, createMuiTheme, Container } from '@material-ui/core';
 import { RemoveCircle, AddCircle } from '@material-ui/icons';
 import { withStyles } from '@material-ui/styles';
 import { green } from '@material-ui/core/colors';
 import AddDialog from '../dialogs/AddDialog';
-import { DialogContext } from '../../contexts/DialogContext';
 
 const theme = createMuiTheme();
 
@@ -34,7 +33,7 @@ const styles = {
 };
 
 const Navbar = () => {
-  const { addDialog, openAddDialog } = useContext(DialogContext);
+  const [openDialog, setOpenDialog] = useState(false);
 
   return (
     <AppBar position="static" style={styles.appBar}>
@@ -53,15 +52,19 @@ const Navbar = () => {
             <RemoveCircle style={styles.icons} />
             Delete
         </Button>
-          <ColorButton variant="contained" color="primary" size="small" onClick={() => openAddDialog()}>
+          <ColorButton
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={() => setOpenDialog(!openDialog)}>
             <AddCircle style={styles.icons} />
             Add New Employees
         </ColorButton>
-          {addDialog ? <AddDialog open={addDialog} /> : ""}
+          {openDialog ? <AddDialog open={openDialog} /> : ""}
         </Toolbar>
       </Container>
     </AppBar>
   );
 }
 
-export default Navbar
+export default Navbar;
